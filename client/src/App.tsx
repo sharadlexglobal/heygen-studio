@@ -5,8 +5,10 @@ import Library from './pages/Library';
 import Assets from './pages/Assets';
 import Translate from './pages/Translate';
 import Guide from './pages/Guide';
+import Anushka from './pages/Anushka';
 
 const NAV = [
+  { to: '/anushka',  label: 'Anushka',          icon: '◉', highlight: true },
   { to: '/',         label: 'Studio',           icon: '✦' },
   { to: '/lipsync',  label: 'Lipsync',          icon: '◈' },
   { to: '/library',  label: 'Library',          icon: '▦' },
@@ -32,23 +34,29 @@ export default function App() {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 2, padding: '0 12px', flex: 1 }}>
-            {NAV.map(({ to, label, icon }) => (
+            {NAV.map(({ to, label, icon, highlight }) => (
               <NavLink key={to} to={to} end={to === '/'}
                 style={({ isActive }) => ({
                   display: 'flex', alignItems: 'center', gap: 10,
                   padding: '10px 12px', borderRadius: 8,
                   textDecoration: 'none', fontSize: 14,
-                  fontWeight: isActive ? 600 : 400,
+                  fontWeight: isActive ? 600 : (highlight ? 500 : 400),
                   color: to === '/guide'
                     ? (isActive ? '#a855f7' : '#7060a0')
-                    : isActive ? 'var(--gold)' : 'var(--muted)',
+                    : highlight
+                      ? (isActive ? '#fff' : 'var(--gold)')
+                      : isActive ? 'var(--gold)' : 'var(--muted)',
                   background: to === '/guide'
                     ? (isActive ? 'rgba(168,85,247,0.1)' : 'transparent')
-                    : isActive ? 'rgba(201,162,39,0.08)' : 'transparent',
+                    : highlight
+                      ? (isActive ? 'var(--gold)' : 'rgba(201,162,39,0.12)')
+                      : isActive ? 'rgba(201,162,39,0.08)' : 'transparent',
+                  border: highlight && !isActive ? '1px solid rgba(201,162,39,0.3)' : '1px solid transparent',
                   transition: 'all 0.15s',
                   marginTop: to === '/guide' ? 8 : 0,
-                  borderTop: to === '/guide' ? '1px solid var(--border)' : 'none',
+                  borderTop: to === '/guide' ? '1px solid var(--border)' : undefined,
                   paddingTop: to === '/guide' ? 18 : 10,
+                  marginBottom: highlight ? 8 : 0,
                 })}
               >
                 <span style={{ fontSize: 15 }}>{icon}</span>
@@ -65,6 +73,7 @@ export default function App() {
 
         <main style={{ marginLeft: 220, flex: 1, padding: '40px 48px', maxWidth: 920 }}>
           <Routes>
+            <Route path="/anushka"   element={<Anushka />} />
             <Route path="/"          element={<Studio />} />
             <Route path="/lipsync"   element={<Lipsync />} />
             <Route path="/library"   element={<Library />} />

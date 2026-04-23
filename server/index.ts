@@ -50,6 +50,16 @@ app.post('/api/assets/upload', upload.single('file'), async (req, res) => {
   }
 });
 
+// Direct video creation: avatar + audio asset (used by Anushka page)
+app.post('/api/videos/direct', async (req, res) => {
+  try {
+    const data = await heygen('POST', '/v2/video/generate', req.body);
+    res.json(data);
+  } catch (err: any) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 // Create video via Video Agent (prompt + optional files)
 app.post('/api/videos/create', async (req, res) => {
   try {

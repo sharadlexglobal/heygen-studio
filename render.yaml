@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: heygen-studio
+    env: node
+    region: singapore
+    plan: starter
+    buildCommand: npm install && cd client && npm install && npm run build
+    startCommand: npx tsx server/index.ts
+    envVars:
+      - key: HEYGEN_API_KEY
+        sync: false
+      - key: NODE_ENV
+        value: production
